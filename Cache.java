@@ -5,7 +5,6 @@ public class Cache {
     private int hits, misses;
     private long totalAccessTime;
     private final int CACHE_LINE_SIZE = 16; // 16 words per line
-
     public Cache(int numSets, int ways) {
         this.numSets = numSets;
         this.sets = new CacheSet[numSets];
@@ -16,7 +15,6 @@ public class Cache {
         this.misses = 0;
         this.totalAccessTime = 0;
     }
-
     public boolean accessMemory(int address) {
         long startTime = System.nanoTime();
         int index = (address / CACHE_LINE_SIZE) % numSets;

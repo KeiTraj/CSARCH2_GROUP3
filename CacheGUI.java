@@ -67,17 +67,14 @@ public class CacheGUI extends JFrame {
         seqButton.setPreferredSize(new Dimension(150, 30));
         seqButton.addActionListener((ActionEvent e) -> runSequentialTest());
         buttonPanel.add(seqButton);
-
         JButton randButton = new JButton("Random Test");
         randButton.setPreferredSize(new Dimension(150, 30));
         randButton.addActionListener((ActionEvent e) -> runRandomTest());
         buttonPanel.add(randButton);
-
         JButton midRepeatButton = new JButton("Mid-Repeat Test");
         midRepeatButton.setPreferredSize(new Dimension(150, 30));
         midRepeatButton.addActionListener((ActionEvent e) -> runMidRepeatTest());
         buttonPanel.add(midRepeatButton);
-
         JButton saveLogButton = new JButton("Save Log");
         saveLogButton.setPreferredSize(new Dimension(150, 30));
         saveLogButton.addActionListener(e -> saveLog());
@@ -103,7 +100,6 @@ public class CacheGUI extends JFrame {
             });
         }).start();
     }
-
     private void accessMemoryInstantly(int address) {
         boolean hit = cache.accessMemory(address);
         logTestResult(address, hit);
@@ -151,7 +147,6 @@ public class CacheGUI extends JFrame {
             }
         }
     }
-
     private void logTestResult(int address, boolean hit) {
         logArea.append("\nAccessed Address: " + address + "\n");
         logArea.append(hit ? "Cache Hit!\n" : "Cache Miss!\n");
@@ -159,7 +154,6 @@ public class CacheGUI extends JFrame {
         logArea.append("Total Access Time: " + cache.getTotalAccessTime() + " ns\n");
         logArea.append("Average Access Time: " + cache.getAverageAccessTime() + " ns\n\n");
     }
-
     private void saveLog() {
         try (FileWriter writer = new FileWriter("cache_log.txt")) {
             writer.write(logArea.getText());
@@ -168,7 +162,6 @@ public class CacheGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Error saving log");
         }
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             CacheGUI gui = new CacheGUI();
