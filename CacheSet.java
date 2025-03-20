@@ -4,8 +4,8 @@ import java.util.Queue;
 
 public class CacheSet {
     private CacheBlock[] blocks;
-    private Queue<Integer> lruQueue;
-    
+    private Queue<Integer> lruQueue; // Store indices (0 to ways-1)
+
     public CacheSet(int ways) {
         blocks = new CacheBlock[ways];
         for (int i = 0; i < ways; i++) {
@@ -13,78 +13,52 @@ public class CacheSet {
         }
         lruQueue = new LinkedList<>();
     }
-    
-    // public boolean access(int tag) {
-    //     for (CacheBlock block : blocks) {
-    //         if (block.isValid() && block.getTag() == tag) {
-    //             lruQueue.remove(tag);
-    //             lruQueue.add(tag);
-    //             return true; // Cache hit
-    //         }
-    //     }
-        
-    //     if (lruQueue.size() < blocks.length) {
-    //         for (CacheBlock block : blocks) {
-    //             if (!block.isValid()) {
-    //                 block.setTag(tag);
-    //                 lruQueue.add(tag);
-    //                 return false; // Cache miss
-    //             }
-    //         }
-    //     }
-        
-    //     int lruTag = lruQueue.poll();
-    //     for (CacheBlock block : blocks) {
-    //         if (block.getTag() == lruTag) {
-    //             block.setTag(tag);
-    //             break;
-    //         }
-    //     }
-    //     lruQueue.add(tag);
-    //     return false;
-    // }
 
     public boolean access(int tag) {
-    System.out.println("Accessing tag: " + tag);
-    System.out.println("Current cache contents before access: " + lruQueue);
+        // For Debug: Print the set before access
+       // System.out.println("\nAccessing tag: " + tag);
+        printSetState();
 
-    // Check if tag is already in cache (Cache Hit)
-    for (CacheBlock block : blocks) {
-        if (block.isValid() && block.getTag() == tag) {
-            // Move accessed block to most recently used
-            lruQueue.remove(tag);
-            lruQueue.add(tag);
-            System.out.println("Cache Hit!");
-            return true;
-        }
-    }
-
-    // If there's space in the set, use an empty block (NO eviction needed)
-    for (CacheBlock block : blocks) {
-        if (!block.isValid()) {
-            block.setTag(tag);
-            block.setValid(true);
-            lruQueue.add(tag);
-            System.out.println("Cache Miss (filled empty block).");
-            return false;
-        }
-    }
-
-    //Only evict if ALL 4 blocks are filled
-    if (lruQueue.size() == 4) {
-        int lruTag = lruQueue.poll(); // Remove LRU tag
-        for (CacheBlock block : blocks) {
-            if (block.getTag() == lruTag) {
-                block.setTag(tag);
-                break;
+        for (int i = 0; i < blocks.length; i++) {
+            CacheBlock block = blocks[i];
+            if (block.isValid() && block.getTag() == tag) {
+                lruQueue.remove(i); 
+                lruQueue.add(i);
+            //    System.out.println("Cache Hit at block index " + i);
+                return true;
             }
         }
-        lruQueue.add(tag);
-        System.out.println("Cache Miss (evicted " + lruTag + ").");
+
+        for (int i = 0; i < blocks.length; i++) {
+            CacheBlock block = blocks[i];
+            if (!block.isValid()) {
+                block.setTag(tag);
+                block.setValid(true);
+                lruQueue.add(i);
+               // System.out.println("Cache Miss (filled empty block at index " + i + ")");
+                printSetState();
+                return false;
+            }
+        }
+
+        int lruIndex = lruQueue.poll();
+        blocks[lruIndex].setTag(tag);
+        lruQueue.add(lruIndex);
+    //    System.out.println("Cache Miss (evicted block at index " + lruIndex + ")");
+        printSetState();
         return false;
     }
 
-    return false;
-}
+    // For Debug: Print state of this set
+    public void printSetState() {
+    //    System.out.print("Cache Blocks: ");
+        for (int i = 0; i < blocks.length; i++) {
+    //        System.out.print("[Index " + i + ": Tag=" + blocks[i].getTag() + ", Valid=" + blocks[i].isValid() + "] ");
+        }
+    //    System.out.println("LRU Queue (index order): " + lruQueue);
+    }
 
+    // public CacheBlock getBlock(int index) {
+    //     return blocks[index];
+    // }
 }
