@@ -34,7 +34,6 @@ public class Cache {
 
         // For Debug: Print entire cache after each access
         printEntireCacheState();
-
         return hit;
     }
 
@@ -43,6 +42,19 @@ public class Cache {
     public int getMisses() { return misses; }
 
     public long getTotalAccessTime() { return totalAccessTime; }
+
+    public int getMemoryAccessCount() { return hits + misses;}
+    
+
+    public double getHitRate() {
+        int totalAccesses = hits + misses;
+        return totalAccesses > 0 ? (double) hits / totalAccesses : 0;
+    }
+    
+    public double getMissRate() {
+        int totalAccesses = hits + misses;
+        return totalAccesses > 0 ? (double) misses / totalAccesses : 0;
+    }    
 
     public double getAverageAccessTime() {
         int totalAccesses = hits + misses;

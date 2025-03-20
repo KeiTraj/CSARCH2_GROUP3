@@ -150,7 +150,10 @@ public class CacheGUI extends JFrame {
     private void logTestResult(int address, boolean hit) {
         logArea.append("\nAccessed Address: " + address + "\n");
         logArea.append(hit ? "Cache Hit!\n" : "Cache Miss!\n");
+        logArea.append("Memory Access Count: " + cache.getMemoryAccessCount() + "\n");
         logArea.append("Hits: " + cache.getHits() + ", Misses: " + cache.getMisses() + "\n");
+        logArea.append("Hit Rate: " + String.format("%.2f", cache.getHitRate() * 100) + "%\n");
+        logArea.append("Miss Rate: " + String.format("%.2f", cache.getMissRate() * 100) + "%\n");
         logArea.append("Total Access Time: " + cache.getTotalAccessTime() + " ns\n");
         logArea.append("Average Access Time: " + cache.getAverageAccessTime() + " ns\n\n");
     }
