@@ -12,23 +12,23 @@ public class Cache {
     private final int CACHE_BLOCK_SIZE = 16; // 16 words (same as line size)
 
 
-    public Cache(int numSets, int ways) {
-        this.numSets = numSets;
-        this.sets = new CacheSet[numSets];
-        for (int i = 0; i < numSets; i++) {
-            sets[i] = new CacheSet(ways);
-        }
-        this.hits = 0;
-        this.misses = 0;
-        this.totalAccessTime = 0;
+    public Cache(int numBlocks) {  // Now only takes total blocks
+        numSets = 1;
+        sets = new CacheSet[numSets]; // Fully associative: only one set
+        sets[0] = new CacheSet(numBlocks); // All blocks in one set
+        hits = 0;
+        misses = 0;
+        totalAccessTime = 0;
+        System.out.println("=== Cache Initialized: Fully Associative, " + numBlocks + " Blocks, MRU Replacement ===");
     }
+
     public boolean accessMemory(int address) {
         long startTime = System.nanoTime();
-        int index = (address / CACHE_LINE_SIZE) % numSets;
-        int tag = address / (CACHE_LINE_SIZE * numSets);
-    //    System.out.println("\n==== Accessing address: " + address + " (Set " + index + ", Tag " + tag + ") ====");
+        
+        int tag = address / CACHE_LINE_SIZE;
+        System.out.println("\n=== Accessing Memory Address: " + address + " | Tag: " + tag + " ===");
 
-        boolean hit = sets[index].access(tag);
+        boolean hit =  sets[0].access(tag);
 
         long endTime = System.nanoTime();
         totalAccessTime += (endTime - startTime);
@@ -78,15 +78,15 @@ public class Cache {
 
     // For Debug: Print full cache (all sets)
     public void printEntireCacheState() {
-    //    System.out.println("\n--- Cache Snapshot ---");
+       System.out.println("\n--- Cache Snapshot ---");
         for (int i = 0; i < numSets; i++) {
-    //        System.out.print("Set " + i + ": ");
+           System.out.print("Set " + i + ": ");
             sets[i].printSetState();
         }
-    //    System.out.println("----------------------\n");
+       System.out.println("----------------------\n");
     }
 
     public CacheSet getSet(int index) {
-        return sets[index];
+        return sets[0];
     }
 }

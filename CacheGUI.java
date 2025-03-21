@@ -1,4 +1,4 @@
-// CacheGUI.java everything
+// CacheGUI.java updated for Fully Associative + MRU
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileWriter;
@@ -30,9 +30,10 @@ public class CacheGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Invalid input. Defaulting to 1024 memory blocks.");
         }
 
-        cache = new Cache(8, 4); // 4-way BSA, 8 sets = 32 blocks total
+        // 🟢 Fully Associative Cache with 32 blocks
+        cache = new Cache(32);
 
-        setTitle("Cache Simulator");
+        setTitle("Cache Simulator (FA + MRU)");
         setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -68,14 +69,17 @@ public class CacheGUI extends JFrame {
         seqButton.setPreferredSize(new Dimension(150, 30));
         seqButton.addActionListener((ActionEvent e) -> runSequentialTest());
         buttonPanel.add(seqButton);
+
         JButton randButton = new JButton("Random Test");
         randButton.setPreferredSize(new Dimension(150, 30));
         randButton.addActionListener((ActionEvent e) -> runRandomTest());
         buttonPanel.add(randButton);
+
         JButton midRepeatButton = new JButton("Mid-Repeat Test");
         midRepeatButton.setPreferredSize(new Dimension(150, 30));
         midRepeatButton.addActionListener((ActionEvent e) -> runMidRepeatTest());
         buttonPanel.add(midRepeatButton);
+
         JButton saveLogButton = new JButton("Save Log");
         saveLogButton.setPreferredSize(new Dimension(150, 30));
         saveLogButton.addActionListener(e -> saveLog());
@@ -90,7 +94,7 @@ public class CacheGUI extends JFrame {
             boolean hit = cache.accessMemory(address);
 
             try {
-                Thread.sleep(500); 
+                Thread.sleep(500);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
@@ -101,6 +105,7 @@ public class CacheGUI extends JFrame {
             });
         }).start();
     }
+
     private void accessMemoryInstantly(int address) {
         boolean hit = cache.accessMemory(address);
         logTestResult(address, hit);
@@ -148,6 +153,7 @@ public class CacheGUI extends JFrame {
             }
         }
     }
+
     private void logTestResult(int address, boolean hit) {
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -160,6 +166,7 @@ public class CacheGUI extends JFrame {
         logArea.append("Total Access Time: " + cache.calculateTotalMemoryAccessTime() + " ns\n");
         logArea.append("Average Access Time: " + df.format(cache.calculateAverageMemoryAccessTime()) + " ns\n\n");
     }
+
     private void saveLog() {
         try (FileWriter writer = new FileWriter("cache_log.txt")) {
             writer.write(logArea.getText());
@@ -168,6 +175,7 @@ public class CacheGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Error saving log");
         }
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             CacheGUI gui = new CacheGUI();
