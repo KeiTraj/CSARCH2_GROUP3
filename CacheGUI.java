@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Random;
 import javax.swing.*;
 
@@ -148,14 +149,16 @@ public class CacheGUI extends JFrame {
         }
     }
     private void logTestResult(int address, boolean hit) {
+        DecimalFormat df = new DecimalFormat("0.00");
+
         logArea.append("\nAccessed Address: " + address + "\n");
         logArea.append(hit ? "Cache Hit!\n" : "Cache Miss!\n");
         logArea.append("Memory Access Count: " + cache.getMemoryAccessCount() + "\n");
         logArea.append("Hits: " + cache.getHits() + ", Misses: " + cache.getMisses() + "\n");
-        logArea.append("Hit Rate: " + String.format("%.2f", cache.getHitRate() * 100) + "%\n");
-        logArea.append("Miss Rate: " + String.format("%.2f", cache.getMissRate() * 100) + "%\n");
-        logArea.append("Total Access Time: " + cache.getTotalAccessTime() + " ns\n");
-        logArea.append("Average Access Time: " + cache.getAverageAccessTime() + " ns\n\n");
+        logArea.append("Hit Rate: " + df.format(cache.getHitRate() * 100) + "%\n");
+        logArea.append("Miss Rate: " + df.format(cache.getMissRate() * 100) + "%\n");
+        logArea.append("Total Access Time: " + cache.calculateTotalMemoryAccessTime() + " ns\n");
+        logArea.append("Average Access Time: " + df.format(cache.calculateAverageMemoryAccessTime()) + " ns\n\n");
     }
     private void saveLog() {
         try (FileWriter writer = new FileWriter("cache_log.txt")) {

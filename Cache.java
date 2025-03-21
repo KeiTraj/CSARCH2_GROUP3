@@ -5,6 +5,13 @@ public class Cache {
     private int hits, misses;
     private long totalAccessTime;
     private final int CACHE_LINE_SIZE = 16; // 16 words per line
+
+    //Constants for timing
+    private final int CACHE_ACCESS_TIME = 1; // ns
+    private final int MEMORY_ACCESS_TIME = 10; // ns
+    private final int CACHE_BLOCK_SIZE = 16; // 16 words (same as line size)
+
+
     public Cache(int numSets, int ways) {
         this.numSets = numSets;
         this.sets = new CacheSet[numSets];
@@ -56,9 +63,17 @@ public class Cache {
         return totalAccesses > 0 ? (double) misses / totalAccesses : 0;
     }    
 
-    public double getAverageAccessTime() {
-        int totalAccesses = hits + misses;
-        return totalAccesses > 0 ? (double) totalAccessTime / totalAccesses : 0;
+    public int getMissPenalty() {
+        return CACHE_ACCESS_TIME + (CACHE_BLOCK_SIZE * MEMORY_ACCESS_TIME) + (CACHE_BLOCK_SIZE * CACHE_ACCESS_TIME);
+    }
+
+    public long calculateTotalMemoryAccessTime() {
+        long hitTime = CACHE_BLOCK_SIZE * hits * CACHE_ACCESS_TIME;
+        long missTime = misses * getMissPenalty();
+        return hitTime + missTime;
+    }
+    public double calculateAverageMemoryAccessTime() {
+        return (getHitRate() * CACHE_ACCESS_TIME) + (getMissRate() * getMissPenalty());
     }
 
     // For Debug: Print full cache (all sets)
