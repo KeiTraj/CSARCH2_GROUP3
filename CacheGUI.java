@@ -114,9 +114,12 @@ public class CacheGUI extends JFrame {
 
     private void runSequentialTest() {
         logArea.append("\nRunning Sequential Test...\n");
-        for (int i = 0; i < memorySize * 2; i++) {
-            boolean hit = cache.accessMemory(i * 16);
-            logTestResult(i * 16, hit);
+        int n = 32;
+        for (int repeat = 0; repeat < 4; repeat++) {
+            for (int i = 0; i < n * 2; i++) {
+                boolean hit = cache.accessMemory(i * 16);
+                logTestResult(i * 16, hit);
+            }
         }
     }
 
@@ -132,22 +135,23 @@ public class CacheGUI extends JFrame {
 
     private void runMidRepeatTest() {
         logArea.append("\nRunning Mid-Repeat Test...\n");
+        int n = 32;
 
-        for (int repeat = 0; repeat < 4; repeat++) { // Repeat pattern 4 times
-            // First n/2 blocks
-            for (int i = 0; i < memorySize / 2; i++) {
+        for (int repeat = 0; repeat < 4; repeat++) {
+            // First 0 to n-1 blocks
+            for (int i = 0; i < n; i++) {
                 boolean hit = cache.accessMemory(i * 16);
                 logTestResult(i * 16, hit);
             }
-            // Middle repeat
+
             for (int r = 0; r < 2; r++) {
-                for (int i = 1; i < memorySize / 2; i++) {
+                for (int i = 0; i < n; i++) {
                     boolean hit = cache.accessMemory(i * 16);
                     logTestResult(i * 16, hit);
                 }
             }
-            // Continue up to 2n blocks
-            for (int i = memorySize / 2; i < memorySize; i++) {
+
+            for (int i = n; i < 2 * n; i++) {
                 boolean hit = cache.accessMemory(i * 16);
                 logTestResult(i * 16, hit);
             }
