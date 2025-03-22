@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+![Screenshot 2025-03-22 171258](https://github.com/user-attachments/assets/a4aca06e-2e57-4336-821d-a3dbc80ce4b0)<<<<<<< HEAD
 # Full Associative + MRU
 =======
 ## CSARCH2-Cache-Simulation-Project---Group2
@@ -18,13 +18,14 @@
  
  ## Test cases
  1. Sequential sequence: up to 2n cache block. Repeat the sequence four times. Example: 0,1,2,3,...,63 {4x}
-    ![Sequential](https://github.com/user-attachments/assets/d747c06e-0cfc-4e02-a443-0b83467bc8b1)
+    ![Screenshot 2025-03-22 171021](https://github.com/user-attachments/assets/e448d46c-9260-48cc-a0ee-bbb9a847f54f)
     
  2. Random sequence: containing 4n main memory blocks.
-    ![random](https://github.com/user-attachments/assets/9e1bc37c-bb4f-4921-a12c-c8becddbaced)
- 
+    ![Screenshot 2025-03-22 171258](https://github.com/user-attachments/assets/5ed4cb04-d59c-4361-89f9-1614fae2fc03)
+
  3. Mid-repeat blocks: Start at block 0, repeat the sequence in the middle two times up to n-1 blocks, after
    which continue up to 2n. Then, repeat the sequence four times. Example: if n=8, sequence=0, 1,2,3,4,5,6,7
    1,2,3,4,5,6,7 8,9,10,11,12,13,14,15 {4x}
-   ![random test](https://github.com/user-attachments/assets/1d42da82-5afa-4ae1-947f-9ed0d6947059)
+   ![Screenshot 2025-03-22 171537](https://github.com/user-attachments/assets/a518e55a-ce66-40c5-b5b1-343a6687e16e)
+
 >>>>>>> 9d9f21f3f7ad4ac4443639a9ec86b14aa9f4cb02
