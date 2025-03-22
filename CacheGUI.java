@@ -1,4 +1,4 @@
-// CacheGUI.java updated for Fully Associative + MRU
+// CacheGUI.java everything
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileWriter;
@@ -13,6 +13,12 @@ public class CacheGUI extends JFrame {
     private JLabel cacheStatus;
     private int memorySize;
     private boolean animatedTracing = true;
+
+    // colors
+    private static final Color BACKGROUND_COLOR = Color.decode("#e3e0d7");
+    private static final Color BUTTON_COLOR = Color.decode("#BE5985");
+    private static final Color BUTTON_HOVER_COLOR = Color.decode("#EC7FA9");
+    private static final Color TEXT_COLOR = Color.decode("#7D1C4A");
 
     public CacheGUI() {
         String input = JOptionPane.showInputDialog(this, "Enter number of memory blocks (minimum 1024):", "Memory Size", JOptionPane.PLAIN_MESSAGE);
@@ -30,26 +36,30 @@ public class CacheGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Invalid input. Defaulting to 1024 memory blocks.");
         }
 
-        // 🟢 Fully Associative Cache with 32 blocks
-        cache = new Cache(32);
+        cache = new Cache(8, 4); // 4-way BSA, 8 sets = 32 blocks total
 
-        setTitle("Cache Simulator (FA + MRU)");
+        setTitle("Cache Simulator");
         setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        getContentPane().setBackground(BACKGROUND_COLOR);
 
         logArea = new JTextArea();
         logArea.setEditable(false);
+        logArea.setBackground(BACKGROUND_COLOR);
+        logArea.setForeground(TEXT_COLOR);
         add(new JScrollPane(logArea), BorderLayout.CENTER);
 
         cacheStatus = new JLabel("Mode: Select Access Type");
-        cacheStatus.setFont(new Font("Arial", Font.BOLD, 16));
+        cacheStatus.setFont(new Font("Gill Sans", Font.BOLD, 20));
+        cacheStatus.setForeground(TEXT_COLOR);
         add(cacheStatus, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(6, 1, 5, 5));
+        buttonPanel.setBackground(BACKGROUND_COLOR);
 
-        JButton stepByStepButton = new JButton("Step-by-Step Tracing");
+        JButton stepByStepButton = createColoredButton("Step-by-Step Tracing");
         stepByStepButton.setPreferredSize(new Dimension(150, 30));
         stepByStepButton.addActionListener((ActionEvent e) -> {
             int address = (int) (Math.random() * memorySize) * 16;
@@ -57,7 +67,7 @@ public class CacheGUI extends JFrame {
         });
         buttonPanel.add(stepByStepButton);
 
-        JButton finalSnapshotButton = new JButton("Final Snapshot");
+        JButton finalSnapshotButton = createColoredButton("Final Snapshot");
         finalSnapshotButton.setPreferredSize(new Dimension(150, 30));
         finalSnapshotButton.addActionListener((ActionEvent e) -> {
             int address = (int) (Math.random() * memorySize) * 16;
@@ -65,27 +75,44 @@ public class CacheGUI extends JFrame {
         });
         buttonPanel.add(finalSnapshotButton);
 
-        JButton seqButton = new JButton("Sequential Test");
+        JButton seqButton = createColoredButton("Sequential Test");
         seqButton.setPreferredSize(new Dimension(150, 30));
         seqButton.addActionListener((ActionEvent e) -> runSequentialTest());
         buttonPanel.add(seqButton);
-
-        JButton randButton = new JButton("Random Test");
+        JButton randButton = createColoredButton("Random Test");
         randButton.setPreferredSize(new Dimension(150, 30));
         randButton.addActionListener((ActionEvent e) -> runRandomTest());
         buttonPanel.add(randButton);
-
-        JButton midRepeatButton = new JButton("Mid-Repeat Test");
+        JButton midRepeatButton = createColoredButton("Mid-Repeat Test");
         midRepeatButton.setPreferredSize(new Dimension(150, 30));
         midRepeatButton.addActionListener((ActionEvent e) -> runMidRepeatTest());
         buttonPanel.add(midRepeatButton);
-
-        JButton saveLogButton = new JButton("Save Log");
+        JButton saveLogButton = createColoredButton("Save Log");
         saveLogButton.setPreferredSize(new Dimension(150, 30));
         saveLogButton.addActionListener(e -> saveLog());
         buttonPanel.add(saveLogButton);
 
         add(buttonPanel, BorderLayout.EAST);
+    }
+
+    private JButton createColoredButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(BUTTON_COLOR);
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Gill Sans", Font.BOLD, 15));
+        button.setBorder(BorderFactory.createLineBorder(BUTTON_HOVER_COLOR));
+        button.setFocusPainted(false);
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(BUTTON_HOVER_COLOR);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(BUTTON_COLOR);
+            }
+        });
+        return button;
     }
 
     private void animateMemoryAccess(int address) {
@@ -94,7 +121,7 @@ public class CacheGUI extends JFrame {
             boolean hit = cache.accessMemory(address);
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(500); 
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
@@ -105,7 +132,6 @@ public class CacheGUI extends JFrame {
             });
         }).start();
     }
-
     private void accessMemoryInstantly(int address) {
         boolean hit = cache.accessMemory(address);
         logTestResult(address, hit);
@@ -153,7 +179,6 @@ public class CacheGUI extends JFrame {
             }
         }
     }
-
     private void logTestResult(int address, boolean hit) {
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -166,7 +191,6 @@ public class CacheGUI extends JFrame {
         logArea.append("Total Access Time: " + cache.calculateTotalMemoryAccessTime() + " ns\n");
         logArea.append("Average Access Time: " + df.format(cache.calculateAverageMemoryAccessTime()) + " ns\n\n");
     }
-
     private void saveLog() {
         try (FileWriter writer = new FileWriter("cache_log.txt")) {
             writer.write(logArea.getText());
@@ -176,10 +200,4 @@ public class CacheGUI extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            CacheGUI gui = new CacheGUI();
-            gui.setVisible(true);
-        });
-    }
 }
