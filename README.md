@@ -32,7 +32,7 @@ You can access the program walkthrough here: https://drive.google.com/file/d/1_9
  3. Mid-repeat blocks: Start at block 0, repeat the sequence in the middle two times up to n-1 blocks, after which continue up to 2n. Then, repeat the sequence four times. Example: if n=8, sequence=0, 1,2,3,4,5,6,7,1,2,3,4,5,6,7 8,9,10,11,12,13,14,15 {4x}
    ![mid](https://github.com/user-attachments/assets/3426d231-6e4b-4bf5-86b7-97fbb4fa33b6)
 
-  Out of the three test cases, the mid-repeat blocks has the most longer running time than Random Sequence and Sequential Sequence. The total access time of mid-repeat blocks is consistently increasing throught the program. Since the user input 1024 as the number of memory blocks, the program will begin to have cache hit halfway. 
+  Out of the three test cases, the mid-repeat blocks has the longest running time than that of the Random Sequence and Sequential Sequence. The total access time of mid-repeat blocks is consistently increasing throught the program. Since the user input 1024 as the number of memory blocks, the program will begin to have cache hit halfway. 
 
 The test cases that were conducted were with a user input of 1024 MM Blocks. Results may slightly vary depending on the device the program was run on.
 
