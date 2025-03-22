@@ -1,8 +1,9 @@
-<<<<<<< HEAD
 # Full Associative + MRU
 =======
 ## CSARCH2-Cache-Simulation-Project---Group2
  The **Cache Simulation Project** is designed to give an overview on the scenarios of the assigned cache mapping and replacement policy. This project contains various test case scenarios to analyze and differentiate each case.
+
+You can access the program walkthrough here: https://drive.google.com/file/d/1_9QFjAlMUsYo9DPEUeWXGNi_NSsl2hDU/view?usp=sharing
  
  ## Specifications
  * Cache line = 16 words
@@ -13,9 +14,9 @@
  * Memory input: 1024
 
 ## How to run the program
- 1. Download the this program into ZIP file. 
+ 1. Download this program into ZIP file. 
  2. Extract the ZIP file and open the file with any IDE that is suitable for editing and runningg java applications.
- 3. Run the CacheGUI.java to run the program. This will display the pop-up window of the program.
+ 3. Run the CacheHome.java to run the program. This will display the pop-up window of the program.
  
  ## Test cases
  1. Sequential sequence: up to 2n cache block. Repeat the sequence four times. Example: 0,1,2,3,...,63 {4x}
@@ -33,4 +34,4 @@
 
   Out of the three test cases, the mid-repeat blocks has the most longer running time than Random Sequence and Sequential Sequence. The total access time of mid-repeat blocks is consistently increasing throught the program. Since the user input 1024 as the number of memory blocks, the program will begin to have cache hit halfway. 
 
->>>>>>> 9d9f21f3f7ad4ac4443639a9ec86b14aa9f4cb02
+
