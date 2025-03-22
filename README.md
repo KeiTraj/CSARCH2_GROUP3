@@ -34,4 +34,8 @@ You can access the program walkthrough here: https://drive.google.com/file/d/1_9
 
   Out of the three test cases, the mid-repeat blocks has the most longer running time than Random Sequence and Sequential Sequence. The total access time of mid-repeat blocks is consistently increasing throught the program. Since the user input 1024 as the number of memory blocks, the program will begin to have cache hit halfway. 
 
+The test cases that were conducted were with a user input of 1024 MM Blocks. Results may slightly vary depending on the device the program was run on.
+
+It was observed that the more the program goes through the sequence, the higher the hit rate becomes. The results also showed that the time depends on the sequence it is given, whether it is Sequential, Random, or Mid-Repeat, they run at different speeds, with Mid-Repeat being the slowest among them. It was also noted that at the first run, the Sequential sequence test case most of the time, if not always has a 100% miss rate, due to having a specific sequence of data and an empty cache at the first run, whereas in comparison to the Random sequence test case and Mid-Repeat sequence test case that already have a few hits in the cache.
+
 
