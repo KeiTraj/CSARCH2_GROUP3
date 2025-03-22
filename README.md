@@ -1,4 +1,4 @@
-![Screenshot 2025-03-22 171258](https://github.com/user-attachments/assets/a4aca06e-2e57-4336-821d-a3dbc80ce4b0)<<<<<<< HEAD
+<<<<<<< HEAD
 # Full Associative + MRU
 =======
 ## CSARCH2-Cache-Simulation-Project---Group2
