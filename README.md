@@ -1,5 +1,4 @@
 # Full Associative + MRU
-=======
 ## CSARCH2-Cache-Simulation-Project---Group2
  The **Cache Simulation Project** is designed to give an overview on the scenarios of the assigned cache mapping and replacement policy. This project contains various test case scenarios to analyze and differentiate each case.
 
@@ -17,6 +16,7 @@ You can access the program walkthrough here: https://drive.google.com/file/d/1_9
  1. Download this program into ZIP file. 
  2. Extract the ZIP file and open the file with any IDE that is suitable for editing and runningg java applications.
  3. Run the CacheHome.java to run the program. This will display the pop-up window of the program.
+    ![overview](https://github.com/user-attachments/assets/a197d4d1-641e-43a0-b569-5fe7953f7fd6)
  
  ## Test cases
  1. Sequential sequence: up to 2n cache block. Repeat the sequence four times. Example: 0,1,2,3,...,63 {4x}
