@@ -10,6 +10,11 @@
  * Read Policy: non load-through
  * Number of memory blocks = minimum of 1024
  * Full Associative + MRU
+
+## How to run the program
+ 1. Download the this program into ZIP file. 
+ 2. Extract the ZIP file and open the file with any IDE that is suitable for editing and runningg java applications.
+ 3. Run the CacheGUI.java to run the program. This will display the pop-up window of the program.
  
  ## Test cases
  1. Sequential sequence: up to 2n cache block. Repeat the sequence four times. Example: 0,1,2,3,...,63 {4x}
